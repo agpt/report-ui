@@ -16,5 +16,4 @@ angular
   .config(routesConfig)
   .component('app', main)
   .component('fsHeader', header)
-  // .component('fountainTitle', title)
   .component('fsFooter', footer);
