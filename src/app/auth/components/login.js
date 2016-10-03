@@ -11,12 +11,7 @@ class LoginController {
   }
 
   login() {
-    this.$state.go('app.reportsummary');
-    // this.service.login(this.emailid, this.password).then(response => {
-    //   this.log.log(response);
-    // }, error => {
-    //   this.log.error(error);
-    // });
+    this.$state.go('app.summary');
   }
 }
 
