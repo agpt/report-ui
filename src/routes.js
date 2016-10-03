@@ -3,11 +3,12 @@ export default routesConfig;
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
-  $urlRouterProvider.otherwise('login');
+  $urlRouterProvider.otherwise('/login');
 
   $stateProvider
     .state('app', {
       url: '/',
+      abstract: true,
       component: 'app'
     })
     .state('app.login', {
@@ -18,16 +19,11 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
       url: 'register',
       component: 'register'
     })
-    .state('app.report', {
+    .state('app.summary', {
       url: 'report',
-      component: 'reports',
-      abstract: true
-    })
-    .state('app.report.summary', {
-      url: '',
       component: 'reportSummary'
     })
-    .state('app.report.builder', {
+    .state('app.builder', {
       url: 'builder',
       component: 'reportBuilder'
     });

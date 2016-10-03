@@ -1,8 +1,10 @@
 
 class ReportSummaryController {
-  constructor($log) {
+  constructor($log, $state) {
     $log.log('Report summary');
+    this.$state = $state;
   }
+
 }
 
 export const summary = {
