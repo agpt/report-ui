@@ -4,8 +4,8 @@ export const commonModules = 'report.commons';
 
 angular.module(commonModules, [])
   .constant('API', {
-    LOGIN: 'http://localhost:3221/api/login',
-    SIGNUP: 'http://localhost:3221/api/register'
+    LOGIN: 'http://localhost:3225/api/login',
+    REGISTER: 'http://localhost:3225/api/register'
   })
   .factory('HTTP', ($http, $q) => {
     const get = function (api, params) {
@@ -18,4 +18,21 @@ angular.module(commonModules, [])
     };
 
     return {get, post};
+  })
+  .factory('httpInterceptor', $log => {
+    return {
+      request: config => {
+        $log.log('request made....!');
+        return config;
+      },
+      requestError: rejection => {
+        return rejection;
+      },
+      response: response => {
+        return response;
+      },
+      responseError: rejection => {
+        return rejection;
+      }
+    };
   });

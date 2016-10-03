@@ -17,4 +17,13 @@ angular
   .config(routesConfig)
   .component('app', main)
   .component('fsHeader', header)
-  .component('fsFooter', footer);
+  .component('fsFooter', footer)
+  .run(($rootScope, $log) => {
+    const fn = $rootScope.$on('$stateChangeStart', (event, toState, toParam, fromState, fromParam) => {
+      $log.log('toState', toState);
+      $log.log('toParam', toParam);
+      $log.log('fromState', fromState);
+      $log.log('from param', fromParam);
+      fn();
+    });
+  });

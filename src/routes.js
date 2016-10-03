@@ -1,7 +1,7 @@
 export default routesConfig;
 
 /** @ngInject */
-function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+function routesConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/login');
 
@@ -27,4 +27,6 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
       url: 'builder',
       component: 'reportBuilder'
     });
+
+  $httpProvider.interceptors.push('httpInterceptor');
 }

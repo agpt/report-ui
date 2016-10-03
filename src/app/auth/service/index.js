@@ -2,27 +2,32 @@ import angular from 'angular';
 
 export const authService = 'auth.service';
 
-const HTTP = new WeakMap();
+// We will use a WeakMap to store the private fields. The Reason behind
+// choosing WeakMap is that those entries that have objects as keys are
+// removed once the object is garbage collected.
+// https://www.sitepoint.com/writing-angularjs-apps-using-es6/
+// const Map = new WeakMap();
 
 class AuthService {
-  constructor($http) {
-    HTTP.set(this, $http);
+  constructor(HTTP, API) {
+    this.http = HTTP;
+    this.API = API;
   }
 
-  login(emailid, password) {
-    return HTTP.get(this).post('/api/login', {emailid, password});
+  login(email, password) {
+    return this.http.post(this.API.LOGIN, {email, password});
   }
 
-  register(name, emailid, password) {
-    HTTP.get(this).post('/api/login', {name, emailid, password});
+  register(name, email, password) {
+    return this.http.post(this.API.REGISTER, {name, email, password});
   }
 
-  static authServiceFactory($http) {
-    return new AuthService($http);
+  static authServiceFactory(HTTP, API) {
+    return new AuthService(HTTP, API);
   }
 }
 
-AuthService.authServiceFactory.$inject = ['$http'];
+AuthService.authServiceFactory.$inject = ['HTTP', 'API'];
 
 angular.module(authService, [])
   .service('AuthService', AuthService.authServiceFactory);
