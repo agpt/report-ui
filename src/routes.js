@@ -1,9 +1,29 @@
-export default routesConfig;
+export default appConfig;
 
 /** @ngInject */
-function routesConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $authProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/report');
+
+  const skipIfLoggedIn = ($q, $state, $auth) => {
+    const deferred = $q.defer();
+    if ($auth.isAuthenticated()) {
+      $state.go('app.summary');
+    } else {
+      deferred.resolve();
+    }
+    return deferred.promise;
+  };
+
+  const loginRequired = ($q, $state, $auth) => {
+    const deferred = $q.defer();
+    if ($auth.isAuthenticated()) {
+      deferred.resolve();
+    } else {
+      $state.go('app.login');
+    }
+    return deferred.promise;
+  };
 
   $stateProvider
     .state('app', {
@@ -11,22 +31,29 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider, $ht
       abstract: true,
       component: 'app'
     })
+    .state('app.summary', {
+      url: 'report',
+      component: 'reportSummary',
+      resolve: {loginRequired}
+    })
     .state('app.login', {
       url: 'login',
-      component: 'login'
+      component: 'login',
+      resolve: {skipIfLoggedIn}
     })
     .state('app.register', {
       url: 'register',
-      component: 'register'
-    })
-    .state('app.summary', {
-      url: 'report',
-      component: 'reportSummary'
+      component: 'register',
+      resolve: {skipIfLoggedIn}
     })
     .state('app.builder', {
       url: 'builder',
-      component: 'reportBuilder'
+      component: 'reportBuilder',
+      resolve: {loginRequired}
     });
+
+  $authProvider.loginUrl = 'http://localhost:3225/api/login';
+  $authProvider.signupUrl = 'http://localhost:3225/api/register';
 
   $httpProvider.interceptors.push('httpInterceptor');
 }

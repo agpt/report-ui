@@ -4,12 +4,10 @@ export const commonModules = 'report.commons';
 
 angular.module(commonModules, [])
   .constant('API', {
-    LOGIN: 'http://localhost:3225/api/login',
-    REGISTER: 'http://localhost:3225/api/register'
+    MAPPING: 'http://localhost:3203/api/v2/mappings'
   })
-  .factory('HTTP', ($http, $q) => {
+  .factory('HTTP', $http => {
     const get = function (api, params) {
-      $q.deffered();
       return $http.get(api, params);
     };
 
@@ -29,6 +27,7 @@ angular.module(commonModules, [])
         return rejection;
       },
       response: response => {
+        $log.log('response received....!');
         return response;
       },
       responseError: rejection => {

@@ -1,8 +1,8 @@
 
 class LoginController {
-  constructor($state, AuthService, $log) {
+  constructor($state, $auth, $log) {
     this.$state = $state;
-    this.service = AuthService;
+    this.auth = $auth;
     this.log = $log;
   }
 
@@ -11,13 +11,18 @@ class LoginController {
   }
 
   login() {
-    // this.service.login(this.emailid, this.password)
-    //   .then(response => {
-    //     this.log.log(response);
-    //   }, error => {
-    //     this.log.error(error);
-    //   });
-    this.$state.go('app.summary');
+    const login = {
+      email: this.emailid,
+      password: this.password
+    };
+    this.auth.login(login)
+      .then(response => {
+        this.log.log(response);
+        this.$state.go('app.summary');
+      }, error => {
+        this.log.error(error);
+      });
+    // this.$state.go('app.summary');
   }
 }
 
