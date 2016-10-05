@@ -5,7 +5,7 @@ function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpP
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/report');
 
-  const skipIfLoggedIn = ($q, $state, $auth) => {
+  const skipIfLoggedIn = ['$q', '$state', '$auth', ($q, $state, $auth) => {
     const deferred = $q.defer();
     if ($auth.isAuthenticated()) {
       $state.go('app.summary');
@@ -13,9 +13,9 @@ function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpP
       deferred.resolve();
     }
     return deferred.promise;
-  };
+  }];
 
-  const loginRequired = ($q, $state, $auth) => {
+  const loginRequired = ['$q', '$state', '$auth', ($q, $state, $auth) => {
     const deferred = $q.defer();
     if ($auth.isAuthenticated()) {
       deferred.resolve();
@@ -23,7 +23,7 @@ function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpP
       $state.go('app.login');
     }
     return deferred.promise;
-  };
+  }];
 
   $stateProvider
     .state('app', {

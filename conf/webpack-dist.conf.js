@@ -32,6 +32,10 @@ module.exports = {
         })
       },
       {
+        test   : /\.(woff|woff2|svg|eot|ttf)$/,
+        loader : 'file-loader'
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [

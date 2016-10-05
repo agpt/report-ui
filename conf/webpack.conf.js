@@ -32,6 +32,14 @@ module.exports = {
         ]
       },
       {
+        test: /\.less$/,
+        loader: "style!css!less?strictMath&noIeCompat"
+      },
+      {
+        test   : /\.(woff|woff2|svg|eot|ttf)$/,
+        loader : 'file-loader'
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [

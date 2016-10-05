@@ -1,10 +1,47 @@
 
 class ReportSummaryController {
-  constructor($log, $state, ReportFactory) {
+  constructor($log, $state, ReportFactory, uiGridGroupingConstants) {
     $log.log('Report summary');
     this.log = $log;
     this.$state = $state;
     this.factory = ReportFactory;
+
+    this.myData = require('../service/report.json');
+
+    this.gridOption = {
+      enableSorting: true,
+      columnDefs: [
+        {
+          name: 'insertionOrderName',
+          grouping: {groupPriority: 0}
+        },
+        {
+          name: "insertionOrderName"
+        },
+        {
+          name: "campaignName"
+        },
+        {
+          name: "placement"
+        },
+        {
+          name: "agency",
+          treeAggregationType: uiGridGroupingConstants.aggregation.MAX,
+          customTreeAggregationFinalizerFn: aggregation => {
+            aggregation.rendered = aggregation.value;
+          }
+        },
+        {
+          name: "advertiser"
+        },
+        {
+          name: "channelType"
+        },
+        {
+          name: "pricingModel"
+        }
+      ]
+    };
   }
 
   testFactory() {
@@ -19,9 +56,15 @@ class ReportSummaryController {
         this.log.error('error', error);
       });
   }
+
+  static summaryFactory($log, $state, ReportFactory, uiGridGroupingConstants) {
+    return new ReportSummaryController($log, $state, ReportFactory, uiGridGroupingConstants);
+  }
 }
+
+ReportSummaryController.summaryFactory.$inject = ['$log', '$state', 'ReportFactory', 'uiGridGroupingConstants'];
 
 export const summary = {
   template: require('./summary.html'),
-  controller: ReportSummaryController
+  controller: ReportSummaryController.summaryFactory
 };
