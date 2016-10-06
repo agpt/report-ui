@@ -1,11 +1,13 @@
 import angular from 'angular';
 import 'angular-ui-router';
+import 'angular-ui-bootstrap';
 import 'angular-ui-grid';
 import 'satellizer';
 
 import {authModule} from './app/auth';
 import {reportModule} from './app/report';
 import {commonModules} from './app/common';
+import {dashboardModule} from './app/dashboard';
 import appConfig from './routes';
 
 import {main} from './app/main';
@@ -16,7 +18,9 @@ import './index.scss';
 import 'angular-ui-grid/ui-grid.css';
 
 angular
-  .module('report', [authModule, reportModule, commonModules, 'ui.router', 'ui.grid', 'ui.grid.grouping', 'ui.grid.resizeColumns', 'satellizer'])
+  .module('report', [authModule, reportModule, commonModules, dashboardModule,
+     'ui.router', 'ui.bootstrap', 'ui.grid', 'ui.grid.grouping',
+     'ui.grid.resizeColumns', 'satellizer'])
   .config(appConfig)
   .component('app', main)
   .component('fsHeader', header)

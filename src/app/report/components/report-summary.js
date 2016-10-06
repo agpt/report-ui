@@ -38,7 +38,8 @@ class ReportSummaryController {
           name: "channelType"
         },
         {
-          name: "pricingModel"
+          name: "pricingModel",
+          grouping: {groupPriority: 1}
         }
       ]
     };

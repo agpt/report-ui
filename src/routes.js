@@ -3,12 +3,12 @@ export default appConfig;
 /** @ngInject */
 function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $authProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
-  $urlRouterProvider.otherwise('/report');
+  $urlRouterProvider.otherwise('/dashboard');
 
   const skipIfLoggedIn = ['$q', '$state', '$auth', ($q, $state, $auth) => {
     const deferred = $q.defer();
     if ($auth.isAuthenticated()) {
-      $state.go('app.summary');
+      $state.go('app.dashboard');
     } else {
       deferred.resolve();
     }
@@ -30,6 +30,11 @@ function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpP
       url: '/',
       abstract: true,
       component: 'app'
+    })
+    .state('app.dashboard', {
+      url: 'dashboard',
+      component: 'dashboard',
+      resolve: {loginRequired}
     })
     .state('app.summary', {
       url: 'report',
