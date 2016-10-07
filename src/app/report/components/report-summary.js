@@ -5,7 +5,6 @@ class ReportSummaryController {
     this.log = $log;
     this.$state = $state;
     this.factory = ReportFactory;
-
     this.myData = require('../service/report.json');
 
     this.gridOption = {
@@ -40,13 +39,24 @@ class ReportSummaryController {
         {
           name: "pricingModel",
           grouping: {groupPriority: 1}
+        },
+        {
+          name: "action",
+          cellTemplate: this.getActions()
         }
-      ]
+      ],
+      appScopeProvider: this
     };
   }
 
-  testFactory() {
-    this.factory.ping();
+  testFactory(entity) {
+    this.log.log(entity.insertionOrderName);
+    // this.factory.ping();
+  }
+
+  getActions() {
+    const actions = require('./actions.html');
+    return `<div sdfsdf ng-if="row.entity.insertionOrderName">${actions}</div>`;
   }
 
   testMapping() {
@@ -63,7 +73,8 @@ class ReportSummaryController {
   }
 }
 
-ReportSummaryController.summaryFactory.$inject = ['$log', '$state', 'ReportFactory', 'uiGridGroupingConstants'];
+ReportSummaryController.summaryFactory.$inject = ['$log', '$state', 'ReportFactory',
+  'uiGridGroupingConstants'];
 
 export const summary = {
   template: require('./summary.html'),
