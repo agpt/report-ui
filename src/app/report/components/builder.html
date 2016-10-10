@@ -1,1 +1,82 @@
-<h1>Report Builder</h1>
+<div class="container">
+  <h1>Report Builder</h1>
+  <div class="form-group">
+    <label for="reportName">Report Name</label>
+    <input type="text" id="reportName" name="name" value="">
+  </div>
+  <div class="form-group">
+    <label for="period">Period</label>
+    <div class="dropdown" uib-dropdown>
+      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{!$ctrl.rconfig.period.name ? "Select" : $ctrl.rconfig.period.name}}
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dropdownMenu1">
+        <li ng-repeat="period in $ctrl.periods">
+          <a role="button" ng-click="$ctrl.setPeriod(period)">{{period.name}}</a>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li><a role="button" ng-click="$ctrl.showCustomPeriod()">Custom Period</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row" ng-show="$ctrl.isCustomPeriod">
+    <div class="col-md-6">
+      <label for="">Start Date</label>
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.dateConfig.startDate.date" is-open="$ctrl.dateConfig.startDate.display" datepicker-options="$ctrl.dateConfig.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="$ctrl.open($ctrl.dateConfig.startDate)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-6">
+      <label for="">End Date</label>
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.dateConfig.endDate.date" is-open="$ctrl.dateConfig.endDate.display" datepicker-options="$ctrl.dateConfig.dateOptions" ng-required="true" close-text="Close" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="$ctrl.open($ctrl.dateConfig.endDate)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="period">Aggregation</label>
+    <div class="dropdown" uib-dropdown on-toggle="$ctrl.toggleAggregate(status)">
+      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{!$ctrl.rconfig.aggregation ? "Select" : $ctrl.rconfig.aggregation}}
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dropdownMenu1">
+        <li ng-repeat="agts in $ctrl.aggregates">
+          <a role="button" ng-click="$ctrl.selectAggregate(agts)">{{agts}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Filters (single selection)</label>
+    <div>
+      <ui-select ng-model="$ctrl.filter.selected" theme="bootstrap" title="Choose a Filter" on-select="$ctrl.onSelectCallback($item, $model)">
+        <ui-select-match placeholder="Select a Filter in the list...">{{$select.selected.item}}</ui-select-match>
+        <ui-select-choices repeat="filter in $ctrl.filters | filter: $select.search" group-by="'type'">
+          <div ng-bind-html="filter.item | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Filters (multiple selection)</label>
+    <div>
+      <ui-select multiple ng-model="$ctrl.filter.selected" close-on-select="false" theme="bootstrap" title="Choose a Filter" on-select="$ctrl.onSelectCallback($item, $model)">
+        <ui-select-match placeholder="Select a Filter in the list...">{{$item.type}} &lt;{{$item.item}}&gt;</ui-select-match>
+        <ui-select-choices repeat="filter in $ctrl.filters | filter: $select.search" group-by="'type'">
+          <div ng-bind-html="filter.item | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+</div>

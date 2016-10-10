@@ -3,6 +3,7 @@ import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-ui-grid';
 import 'angular-sanitize';
+import 'ui-select';
 import 'satellizer';
 
 import {authModule} from './app/auth';
@@ -17,10 +18,11 @@ import {footer} from './app/footer';
 
 import './index.scss';
 import 'angular-ui-grid/ui-grid.css';
+import 'ui-select/dist/select.min.css';
 
 angular
   .module('report', [authModule, reportModule, commonModules, dashboardModule,
-    'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.grid', 'ui.grid.grouping',
+    'ngSanitize', 'ui.select', 'ui.router', 'ui.bootstrap', 'ui.grid', 'ui.grid.grouping',
     'ui.grid.resizeColumns', 'satellizer'])
   .config(appConfig)
   .component('app', main)
