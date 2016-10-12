@@ -1,9 +1,10 @@
 
 class LoginController {
-  constructor($state, $auth, $log) {
+  constructor($state, $auth, $log, toastr) {
     this.$state = $state;
     this.auth = $auth;
     this.log = $log;
+    this.toastr = toastr;
   }
 
   register() {
@@ -16,21 +17,20 @@ class LoginController {
       password: this.password
     };
     this.auth.login(login)
-      .then(response => {
-        this.log.log(response);
+      .then(() => {
         this.$state.go('app.dashboard');
       }, error => {
-        this.log.error(error);
+        const status = error.status;
+        this.toastr.error('Failed to Login', `Error (${status})`);
       });
-    // this.$state.go('app.summary');
   }
 
-  static factory($state, $auth, $log) {
-    return new LoginController($state, $auth, $log);
+  static factory($state, $auth, $log, toastr) {
+    return new LoginController($state, $auth, $log, toastr);
   }
 }
 
-LoginController.factory.$inject = ['$state', '$auth', '$log'];
+LoginController.factory.$inject = ['$state', '$auth', '$log', 'toastr'];
 
 export const login = {
   template: require('./login.html'),

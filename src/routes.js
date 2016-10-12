@@ -1,7 +1,9 @@
+import angular from 'angular';
 export default appConfig;
 
 /** @ngInject */
-function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $authProvider) {
+function appConfig($stateProvider, $urlRouterProvider, $locationProvider,
+  $httpProvider, $authProvider, toastrConfig) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/dashboard');
 
@@ -61,4 +63,9 @@ function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $httpP
   $authProvider.signupUrl = 'http://localhost:3225/api/register';
 
   $httpProvider.interceptors.push('httpInterceptor');
+
+  angular.extend(toastrConfig, {
+    timeout: 3000,
+    positionClass: 'toast-top-right'
+  });
 }

@@ -19,21 +19,22 @@ angular.module(commonModules, [])
 
     return {get, post};
   }])
-  .factory('httpInterceptor', ['$log', $log => {
+  .factory('httpInterceptor', ['$log', '$q', ($log, $q) => {
     return {
       request: config => {
         $log.log('request made....!');
         return config;
       },
       requestError: rejection => {
-        return rejection;
+        return $q.reject(rejection);
       },
       response: response => {
         $log.log('response received....!');
         return response;
       },
       responseError: rejection => {
-        return rejection;
+        $log.log('response error!');
+        return $q.reject(rejection);
       }
     };
   }]);
