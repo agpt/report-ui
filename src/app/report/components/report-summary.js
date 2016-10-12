@@ -1,4 +1,6 @@
-
+/**
+* @ngInject
+*/
 class ReportSummaryController {
   constructor($log, $state, ReportFactory, uiGridGroupingConstants) {
     $log.log('Report summary');
@@ -68,15 +70,9 @@ class ReportSummaryController {
       });
   }
 
-  static summaryFactory($log, $state, ReportFactory, uiGridGroupingConstants) {
-    return new ReportSummaryController($log, $state, ReportFactory, uiGridGroupingConstants);
-  }
 }
-
-ReportSummaryController.summaryFactory.$inject = ['$log', '$state', 'ReportFactory',
-  'uiGridGroupingConstants'];
 
 export const summary = {
   template: require('./summary.html'),
-  controller: ReportSummaryController.summaryFactory
+  controller: ReportSummaryController
 };

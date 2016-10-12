@@ -4,6 +4,9 @@ export const serviceModule = 'reports.factory';
 
 const Map = new WeakMap();
 
+/**
+* @ngInject
+*/
 class ReportService {
   constructor(HTTP, $log, API) {
     Map.set(this, HTTP);
@@ -19,12 +22,7 @@ class ReportService {
     return Map.get(this).get(this.API.MAPPING);
   }
 
-  static reportServiceFactory(HTTP, $log, API) {
-    return new ReportService(HTTP, $log, API);
-  }
 }
 
-ReportService.reportServiceFactory.$inject = ['HTTP', '$log', 'API'];
-
 angular.module(serviceModule, [])
-  .factory('ReportFactory', ReportService.reportServiceFactory);
+  .factory('ReportFactory', ReportService);

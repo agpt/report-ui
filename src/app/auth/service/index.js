@@ -8,6 +8,9 @@ export const authService = 'auth.service';
 // https://www.sitepoint.com/writing-angularjs-apps-using-es6/
 // const Map = new WeakMap();
 
+/**
+* @ngInject
+*/
 class AuthService {
   constructor(HTTP, API) {
     this.http = HTTP;
@@ -22,12 +25,7 @@ class AuthService {
     return this.http.post(this.API.REGISTER, {name, email, password});
   }
 
-  static authServiceFactory(HTTP, API) {
-    return new AuthService(HTTP, API);
-  }
 }
 
-AuthService.authServiceFactory.$inject = ['HTTP', 'API'];
-
 angular.module(authService, [])
-  .service('AuthService', AuthService.authServiceFactory);
+  .service('AuthService', AuthService);

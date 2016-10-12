@@ -1,4 +1,6 @@
-
+/**
+* @ngInject
+*/
 class ReportBuilderController {
   constructor($log) {
     $log.log('Report Builder');
@@ -86,15 +88,9 @@ class ReportBuilderController {
     this.log.log(status);
     this.rconfig.aggregation = status;
   }
-
-  static builderFactory($log) {
-    return new ReportBuilderController($log);
-  }
 }
-
-ReportBuilderController.builderFactory.$inject = ['$log'];
 
 export const builder = {
   template: require('./builder.html'),
-  controller: ReportBuilderController.builderFactory
+  controller: ReportBuilderController
 };

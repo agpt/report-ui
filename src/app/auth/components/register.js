@@ -1,3 +1,6 @@
+/**
+* @ngInject
+*/
 class RegisterController {
   constructor($auth, $log, $state) {
     this.test = '';
@@ -20,14 +23,9 @@ class RegisterController {
     }
   }
 
-  static factory($auth, $log, $state) {
-    return new RegisterController($auth, $log, $state);
-  }
 }
-
-RegisterController.factory.$inject = ['$auth', '$log', '$state'];
 
 export const register = {
   template: require('./register.html'),
-  controller: RegisterController.factory
+  controller: RegisterController
 };

@@ -1,4 +1,6 @@
-
+/**
+* @ngInject
+*/
 class LoginController {
   constructor($state, $auth, $log, toastr) {
     this.$state = $state;
@@ -25,14 +27,9 @@ class LoginController {
       });
   }
 
-  static factory($state, $auth, $log, toastr) {
-    return new LoginController($state, $auth, $log, toastr);
-  }
 }
-
-LoginController.factory.$inject = ['$state', '$auth', '$log', 'toastr'];
 
 export const login = {
   template: require('./login.html'),
-  controller: LoginController.factory
+  controller: LoginController
 };
